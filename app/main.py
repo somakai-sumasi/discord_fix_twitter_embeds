@@ -24,10 +24,10 @@ async def on_ready():
 @bot.event
 async def on_message(message: discord.Message):
     if len(message.embeds) != 0:
-     return
-    
+        return
+
     url = edit_twitter_url(message.content)
-    if(url == None):
+    if url == None:
         return None
 
     await message.channel.send(url)
