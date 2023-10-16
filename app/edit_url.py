@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 
 
 def edit_twitter_url(txt: str):
-    result = None
+    result = ""
     for match in re.finditer(r"https?://[\w/:%#\$&\?\(\)~\.=\+\-]+", txt):
         url = match.group()
         parse = urlparse(url)
