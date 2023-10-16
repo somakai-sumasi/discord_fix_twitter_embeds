@@ -13,6 +13,6 @@ def edit_twitter_url(txt: str):
             continue
 
         convert_parse = parse._replace(netloc="vxtwitter.com")
-        result = convert_parse.geturl() + "\n"
+        result += convert_parse.geturl() + "\n"
 
     return result
