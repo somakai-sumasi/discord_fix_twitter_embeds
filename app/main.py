@@ -27,7 +27,7 @@ async def on_message(message: discord.Message):
         return
 
     url = edit_twitter_url(message.content)
-    if url == None:
+    if url == '':
         return None
 
     await message.channel.send(url)
