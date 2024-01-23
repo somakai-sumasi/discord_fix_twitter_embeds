@@ -12,7 +12,7 @@ def edit_twitter_url(txt: str):
         if domain != "twitter.com" and domain != "x.com":
             continue
 
-        convert_parse = parse._replace(netloc="vxtwitter.com")
+        convert_parse = parse._replace(netloc="fxtwitter.com")
         result += convert_parse.geturl() + "\n"
 
     return result

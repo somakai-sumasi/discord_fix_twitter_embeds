@@ -23,12 +23,20 @@ async def on_ready():
 # メッセージ受信時のイベント
 @bot.event
 async def on_message(message: discord.Message):
-    if len(message.embeds) != 0:
-        return
-
     url = edit_twitter_url(message.content)
     if url == '':
         return None
+
+    permissions = message.channel.permissions_for(message.guild.me)
+
+    if not permissions.send_messages or not permissions.embed_links:
+        return
+
+    if permissions.manage_messages:
+        try:
+            await message.edit(suppress=True)
+        except Exception as e:
+            return
 
     await message.channel.send(url)
 
