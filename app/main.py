@@ -1,10 +1,9 @@
-import math
 import os
 
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from edit_url import edit_twitter_url
+from edit_url import edit_twitter_url, suppress_embeds
 
 load_dotenv()
 intents = discord.Intents.all()
@@ -23,22 +22,15 @@ async def on_ready():
 # メッセージ受信時のイベント
 @bot.event
 async def on_message(message: discord.Message):
-    url = edit_twitter_url(message.content)
-    if url == '':
-        return None
-
-    permissions = message.channel.permissions_for(message.guild.me)
-
-    if not permissions.send_messages or not permissions.embed_links:
+    if message.author.bot:
         return
 
-    if permissions.manage_messages:
-        try:
-            await message.edit(suppress=True)
-        except Exception as e:
-            return
+    parse_message = edit_twitter_url(message.content)
+    if parse_message == "":
+        return
 
-    await message.channel.send(url)
+    await message.channel.send(parse_message)
+    await suppress_embeds(message)
 
 
 TOKEN = os.getenv("TOKEN")
