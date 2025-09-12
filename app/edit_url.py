@@ -29,6 +29,19 @@ def replace_twitter_urls(txt: str, has_spoiler: bool = False):
         if domain != "twitter.com" and domain != "x.com":
             continue
 
+        # URLパスを取得
+        path = parse.path
+
+        # ツイートURLパターンのみを変換
+        # パターン: /username/status/tweet_id または /username/status/tweet_id/photo/n
+        if not re.match(r"^/[^/]+/status/\d+(?:/photo/\d+)?/?$", path):
+            # 以下のパターンは変換しない:
+            # - /i/ で始まるURL（trending, events, lists, spaces等）
+            # - /settings, /home, /explore, /notifications, /messages
+            # - ユーザープロフィール（/username のみ）
+            # - その他のツイート以外のURL
+            continue
+
         convert_parse = parse._replace(netloc="fxtwitter.com")
         result += "[Tweetへ](" + convert_parse.geturl() + ")"
         if has_spoiler:
