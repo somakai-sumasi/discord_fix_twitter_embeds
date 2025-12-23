@@ -29,7 +29,7 @@ async def on_message(message: discord.Message):
     if parse_message == "":
         return
 
-    await message.channel.send(parse_message)
+    await message.channel.send(parse_message, silent=True)
     await suppress_embeds(message)
 
 
