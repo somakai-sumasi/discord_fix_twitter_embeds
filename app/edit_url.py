@@ -42,7 +42,8 @@ def replace_twitter_urls(txt: str, has_spoiler: bool = False):
             # - その他のツイート以外のURL
             continue
 
-        convert_parse = parse._replace(netloc="fxtwitter.com")
+        new_path = path.rstrip("/") + "/ja"
+        convert_parse = parse._replace(netloc="fxtwitter.com", path=new_path)
         result += "[Tweetへ](" + convert_parse.geturl() + ")"
         if has_spoiler:
             result = "||" + result + "||"
